@@ -1,14 +1,14 @@
 import React from 'react'
 
+import Part from './part'
+
 export default ({ content }) => {
   return (
     <div>
     {
       content.map(c => {
         return (
-          <p key={`${c.part}-${c.exercises}`}>
-            {c.part} {c.exercises}
-          </p>
+          <Part name={c.part} exercises={c.exercises}/>
         )
       })
     }
