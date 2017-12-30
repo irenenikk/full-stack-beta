@@ -6,11 +6,12 @@ import Stats from './components/stats';
 import Content from './components/content';
 
 const App = () => {
-  const kurssi = 'Half Stack -sovelluskehitys'
-  let content = [];
-  content.push({part: 'Reactin perusteet', exercises: 10})
-  content.push({part: 'Tiedonvälitys propseilla', exercises: 7})
-  content.push({part: 'Komponenttien tila', exercises: 14})
+  const course = 'Half Stack -sovelluskehitys'
+  const content = [
+    { part: 'Reactin perusteet', exercises: 10 },
+    { part: 'Tiedonvälitys propseilla', exercises: 7 },
+    { part: 'Komponenttien tila', exercises: 14 }
+  ];
   return (
     <div>
       <Title title={kurssi} />
