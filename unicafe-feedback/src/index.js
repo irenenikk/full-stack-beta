@@ -11,7 +11,8 @@ class App extends React.Component {
   constructor(props) {
     const feedback = [
       { attribute: "hyvä", counter: 0},
-      { attribute: "kohtalainen", counter: 0 }
+      { attribute: "neutraali", counter: 0 },
+      { attribute: "huono", counter: 0 },
     ]
     super(props)
     this.state = { feedback: feedback }
