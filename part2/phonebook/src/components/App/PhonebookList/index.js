@@ -4,12 +4,12 @@ import Person from './person'
 
 export default ({ persons }) => {
   return (
-    <div>
-      <ul>
+    <table>
+      <tbody>
         {
           persons.map(p => <Person key={p.name} person={p} />)
         }
-      </ul>
-    </div>
+      </tbody>
+    </table>
   )
 }

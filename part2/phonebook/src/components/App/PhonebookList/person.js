@@ -2,8 +2,8 @@ import React from 'react'
 
 export default ({ person }) => {
   return (
-    <li>
-      {person.name}
-    </li>
+    <tr>
+      <td>{person.name}:</td><td>{person.phoneNumber}</td>
+    </tr>
   )
 }
