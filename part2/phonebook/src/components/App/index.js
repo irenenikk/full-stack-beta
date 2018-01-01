@@ -3,6 +3,7 @@ import React from 'react'
 import AppTitle from './AppTitle'
 import PhonebookForm from './PhonebookForm'
 import PhonebookList from  './PhonebookList'
+import PhonebookInput from './PhonebookForm/PhonebookInput'
 
 export default class App extends React.Component {
   constructor(props){
@@ -12,11 +13,24 @@ export default class App extends React.Component {
         {
           name: 'Arto Hellas',
           phoneNumber: '123456'
+        },
+        {
+          name: 'Martti Tienari',
+          phoneNumber: '040-123456'
+        },
+        {
+          name: 'Arto Järvinen',
+          phoneNumber: '040-123456'
+        },
+        {
+          name: 'Lea Kutvonen',
+          phoneNumber: '040-123456'
         }
       ],
       newName: '',
       newPhoneNumber: '',
-      error: ''
+      error: '',
+      filter: '',
     }
   }
 
@@ -26,6 +40,31 @@ export default class App extends React.Component {
 
   onNewPhoneNumberChange = (e) => {
     this.setState({ newPhoneNumber: e.target.value })
+  }
+
+  onFilterChange = (e) => {
+    const filter = e.target.value
+    this.setState({ filter })
+  }
+
+  filterPersons = () => {
+    const filter = this.state.filter.trim()
+    if (filter !== '') {
+       const personsToShow = this.state.persons.filter(p => {
+        let filtered = false
+        Object.values(p).forEach(field => {
+          if (typeof field === "string") {
+            const content = field.trim().toLowerCase();
+            if (content.includes(filter)) {
+              filtered = true
+            }
+          }
+        })
+        return filtered
+      })
+      return personsToShow
+    }
+    return this.state.persons
   }
 
   onAddNewPerson = (e) => {
@@ -68,9 +107,15 @@ export default class App extends React.Component {
   }
 
   render() {
+    const personsToShow = this.filterPersons()
     return (
       <div>
         <AppTitle title="Puhelinluettelo" />
+        <PhonebookInput
+          name="hae puhelinluettelosta"
+          onChange={this.onFilterChange}
+          value={this.state.filter}
+        />
         <PhonebookForm
           onNewNameChange={this.onNewNameChange}
           onNewPhoneNumberChange={this.onNewPhoneNumberChange}
@@ -81,7 +126,7 @@ export default class App extends React.Component {
         />
         <AppTitle title="Numerot" />
         <PhonebookList
-          persons={this.state.persons}
+          persons={personsToShow}
         />
       </div>
     )
