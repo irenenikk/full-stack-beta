@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import AppTitle from './AppTitle'
 import PhonebookForm from './PhonebookForm'
@@ -9,37 +10,27 @@ export default class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      persons: [
-        {
-          name: 'Arto Hellas',
-          phoneNumber: '123456'
-        },
-        {
-          name: 'Martti Tienari',
-          phoneNumber: '040-123456'
-        },
-        {
-          name: 'Arto Järvinen',
-          phoneNumber: '040-123456'
-        },
-        {
-          name: 'Lea Kutvonen',
-          phoneNumber: '040-123456'
-        }
-      ],
+      persons: [],
       newName: '',
-      newPhoneNumber: '',
+      newNumber: '',
       error: '',
       filter: '',
     }
+  }
+
+  componentWillMount() {
+    axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/persons`)
+          .then(response => {
+            this.setState({ persons: response.data })
+          })
   }
 
   onNewNameChange = (e) => {
     this.setState({ newName: e.target.value })
   }
 
-  onNewPhoneNumberChange = (e) => {
-    this.setState({ newPhoneNumber: e.target.value })
+  onNewNumberChange = (e) => {
+    this.setState({ newNumber: e.target.value })
   }
 
   onFilterChange = (e) => {
@@ -71,13 +62,13 @@ export default class App extends React.Component {
     e.preventDefault()
     const newPerson = {
       name: this.state.newName.trim(),
-      phoneNumber: this.state.newPhoneNumber.trim()
+      number: this.state.newNumber.trim()
     }
     if (!this.isNewPersonValid(newPerson)) {
       return
     }
     const persons = this.state.persons.concat(newPerson)
-    this.setState({ persons, newName: '', newPhoneNumber: '' })
+    this.setState({ persons, newName: '', newNumber: '' })
   }
 
   isNewPersonValid = (person) => {
@@ -85,7 +76,7 @@ export default class App extends React.Component {
       this.createErrorMessage('Ole hyvä ja kirjoita lisättävälle henkilölle nimi')
       return false
     }
-    if (person.phoneNumber === '') {
+    if (person.number === '') {
       this.createErrorMessage('Ole hyvä ja kirjoita lisättävälle henkilölle puhelinnumero')
       return false
     }
@@ -118,10 +109,10 @@ export default class App extends React.Component {
         />
         <PhonebookForm
           onNewNameChange={this.onNewNameChange}
-          onNewPhoneNumberChange={this.onNewPhoneNumberChange}
+          onNewNumberChange={this.onNewNumberChange}
           onSubmit={this.onAddNewPerson}
           newNameValue={this.state.newName}
-          newPhoneNumberValue={this.state.newPhoneNumber}
+          newNumberValue={this.state.newNumber}
           errorMessage={this.state.error}
         />
         <AppTitle title="Numerot" />
