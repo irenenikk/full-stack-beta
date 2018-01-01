@@ -67,8 +67,11 @@ export default class App extends React.Component {
     if (!this.isNewPersonValid(newPerson)) {
       return
     }
-    const persons = this.state.persons.concat(newPerson)
-    this.setState({ persons, newName: '', newNumber: '' })
+    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/persons`, newPerson)
+          .then(response => {
+            const persons = this.state.persons.concat(response.data)
+            this.setState({ persons, newName: '', newNumber: '' })
+          })
   }
 
   isNewPersonValid = (person) => {
