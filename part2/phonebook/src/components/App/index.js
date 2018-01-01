@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import personService from '../../services/persons'
 
 import AppTitle from './AppTitle'
 import PhonebookForm from './PhonebookForm'
@@ -19,10 +19,14 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(`${process.env.REACT_APP_SERVER_ADDRESS}/persons`)
-          .then(response => {
-            this.setState({ persons: response.data })
-          })
+    personService
+      .getAllPersons()
+      .then(persons => {
+          this.setState({ persons })
+      })
+      .catch(e => {
+        this.createErrorMessage('Henkilöiden hakeminen ei onnistunut')
+      })
   }
 
   onNewNameChange = (e) => {
@@ -67,11 +71,15 @@ export default class App extends React.Component {
     if (!this.isNewPersonValid(newPerson)) {
       return
     }
-    axios.post(`${process.env.REACT_APP_SERVER_ADDRESS}/persons`, newPerson)
-          .then(response => {
-            const persons = this.state.persons.concat(response.data)
-            this.setState({ persons, newName: '', newNumber: '' })
-          })
+    personService
+      .createPerson(newPerson)
+      .then(newP => {
+        const persons = this.state.persons.concat(newP)
+        this.setState({ persons, newName: '', newNumber: '' })
+      })
+      .catch((e) => {
+        this.createErrorMessage(`Ei voitu luoda henkilöä ${newPerson.name}`)
+      })
   }
 
   isNewPersonValid = (person) => {
