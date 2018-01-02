@@ -107,6 +107,7 @@ export default class App extends React.Component {
       })
       .catch((e) => {
         this.createNotification(`Henkilön ${updatedPerson.name} päivitys ei onnistunut`, true)
+        this.setState({ persons: this.state.persons.filter(p => p.id !== updatedPerson.id) })
       })
   }
 
