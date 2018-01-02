@@ -82,6 +82,24 @@ export default class App extends React.Component {
       })
   }
 
+  deletePerson = (id) => {
+    personService
+      .deletePerson(id)
+      .then(() => {
+        const persons = this.state.persons.filter(p => p.id !== id)
+        this.setState({ persons })
+      })
+  }
+
+  updatePerson = (updatedPerson) => {
+    personService
+      .updatePerson(updatedPerson)
+      .then(() => {
+        const persons = this.state.persons.filter(p => p.id !== updatedPerson.id)
+        this.setState({ persons: persons.concat(updatedPerson) })
+      })
+  }
+
   isNewPersonValid = (person) => {
     if (person.name === '') {
       this.createErrorMessage('Ole hyvä ja kirjoita lisättävälle henkilölle nimi')
@@ -93,7 +111,9 @@ export default class App extends React.Component {
     }
     const personNames = this.state.persons.map(p => p.name.toLowerCase());
     if (personNames.includes(person.name.toLowerCase())) {
-      this.createErrorMessage(`${person.name} on jo puhelinluettelossa`)
+      const oldPerson = this.state.persons.find(p => p.name.toLowerCase() === person.name.toLowerCase())
+      const updatedPerson = { ...person, id: oldPerson.id}
+      this.updatePerson(updatedPerson)
       return false
     }
     return true
@@ -129,6 +149,7 @@ export default class App extends React.Component {
         <AppTitle title="Numerot" />
         <PhonebookList
           persons={personsToShow}
+          onDeletePerson={this.deletePerson}
         />
       </div>
     )

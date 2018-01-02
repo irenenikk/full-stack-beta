@@ -13,6 +13,10 @@ const deletePerson = (id) => {
   return axios.delete(`${SERVER}/${id}`).then(_handleResponse)
 }
 
+const updatePerson = (updatedPerson) => {
+  return axios.put(`${SERVER}/${updatedPerson.id}`, updatedPerson).then(_handleResponse)
+}
+
 const _handleResponse = (response) => response.data
 
-export default { createPerson, getAllPersons }
+export default { createPerson, getAllPersons, deletePerson, updatePerson }

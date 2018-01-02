@@ -2,7 +2,7 @@ import React from 'react'
 
 import Person from './person'
 
-export default ({ persons }) => {
+export default ({ persons, onDeletePerson }) => {
   if (persons.length === 0) {
     return null
   }
@@ -10,9 +10,11 @@ export default ({ persons }) => {
     <table>
       <tbody>
         {
-          persons.map(p => <Person key={p.name} person={p} />)
+          persons.sort(byId).map(p => <Person key={p.name} person={p} onDeletePerson={onDeletePerson}/>)
         }
       </tbody>
     </table>
   )
 }
+
+const byId = (p1, p2) => p1.id - p2.id
