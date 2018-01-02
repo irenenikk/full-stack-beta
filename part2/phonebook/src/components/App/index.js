@@ -5,6 +5,7 @@ import AppTitle from './AppTitle'
 import PhonebookForm from './PhonebookForm'
 import PhonebookList from  './PhonebookList'
 import PhonebookInput from './PhonebookForm/PhonebookInput'
+import Notification from './Notification'
 
 export default class App extends React.Component {
   constructor(props){
@@ -13,7 +14,7 @@ export default class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      error: '',
+      notification: {},
       filter: '',
     }
   }
@@ -25,7 +26,7 @@ export default class App extends React.Component {
           this.setState({ persons })
       })
       .catch(e => {
-        this.createErrorMessage('Henkilöiden hakeminen ei onnistunut')
+        this.createNotification('Henkilöiden hakeminen ei onnistunut', true)
       })
   }
 
@@ -76,18 +77,23 @@ export default class App extends React.Component {
       .then(newP => {
         const persons = this.state.persons.concat(newP)
         this.setState({ persons, newName: '', newNumber: '' })
+        this.createNotification(`Henkilö ${newPerson.name} luotu onnistuneesti`)
       })
       .catch((e) => {
-        this.createErrorMessage(`Ei voitu luoda henkilöä ${newPerson.name}`)
+        this.createNotification(`Ei voitu luoda henkilöä ${newPerson.name}`, true)
       })
   }
 
-  deletePerson = (id) => {
+  deletePerson = (person) => {
     personService
-      .deletePerson(id)
+      .deletePerson(person.id)
       .then(() => {
-        const persons = this.state.persons.filter(p => p.id !== id)
+        const persons = this.state.persons.filter(p => p.id !== person.id)
         this.setState({ persons })
+        this.createNotification(`Henkilö ${person.name} poistettu onnistuneesti`)
+      })
+      .catch((e) => {
+        this.createNotification(`Henkilön ${person.name} poistaminen ei onnistunut`, true)
       })
   }
 
@@ -97,16 +103,20 @@ export default class App extends React.Component {
       .then(() => {
         const persons = this.state.persons.filter(p => p.id !== updatedPerson.id)
         this.setState({ persons: persons.concat(updatedPerson) })
+        this.createNotification(`Henkilö ${updatedPerson.name} päivitetty onnistuneesti`)
+      })
+      .catch((e) => {
+        this.createNotification(`Henkilön ${updatedPerson.name} päivitys ei onnistunut`, true)
       })
   }
 
   isNewPersonValid = (person) => {
     if (person.name === '') {
-      this.createErrorMessage('Ole hyvä ja kirjoita lisättävälle henkilölle nimi')
+      this.createNotification('Ole hyvä ja kirjoita lisättävälle henkilölle nimi', true)
       return false
     }
     if (person.number === '') {
-      this.createErrorMessage('Ole hyvä ja kirjoita lisättävälle henkilölle puhelinnumero')
+      this.createNotification('Ole hyvä ja kirjoita lisättävälle henkilölle puhelinnumero', true)
       return false
     }
     const personNames = this.state.persons.map(p => p.name.toLowerCase());
@@ -119,12 +129,12 @@ export default class App extends React.Component {
     return true
   }
 
-  createErrorMessage = (error) => {
+  createNotification = (message, isError) => {
     this.setState({
-      error,
+      notification: { message, error: isError},
     })
     setTimeout(() => {
-      this.setState({ error: '' })
+      this.setState({ notification: {} })
     }, 1500);
   }
 
@@ -132,19 +142,20 @@ export default class App extends React.Component {
     const personsToShow = this.filterPersons()
     return (
       <div>
+        <Notification notification={this.state.notification} />
         <AppTitle title="Puhelinluettelo" />
         <PhonebookInput
           name="hae puhelinluettelosta"
           onChange={this.onFilterChange}
           value={this.state.filter}
         />
+        <AppTitle title="Lisää" />
         <PhonebookForm
           onNewNameChange={this.onNewNameChange}
           onNewNumberChange={this.onNewNumberChange}
           onSubmit={this.onAddNewPerson}
           newNameValue={this.state.newName}
           newNumberValue={this.state.newNumber}
-          errorMessage={this.state.error}
         />
         <AppTitle title="Numerot" />
         <PhonebookList

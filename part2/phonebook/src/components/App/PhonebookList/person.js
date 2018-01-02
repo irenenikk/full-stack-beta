@@ -5,7 +5,7 @@ export default ({ person, onDeletePerson }) => {
     <tr>
       <td>{person.name}:</td>
       <td>{person.number}</td>
-      <td><button onClick={() => onDeletePerson(person.id)} >delete</button></td>
+      <td><button onClick={() => onDeletePerson(person)} >delete</button></td>
     </tr>
   )
 }
