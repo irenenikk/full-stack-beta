@@ -5,15 +5,15 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogsRouter = require('./controllers/blogs')
+require('dotenv').config()
 
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/api/blogs', blogsRouter)
-app.use(middleware.error)
 
 
 const mongoUrl = process.env.MONGODB_URI
-mongoose.connect(mongoUrl, { useMongoClient: true })
+mongoose.connection.openUri(mongoUrl)
 mongoose.Promise = global.Promise
 
 const PORT = 3003
