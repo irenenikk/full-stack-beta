@@ -3,10 +3,10 @@ const formatUser = require('../utils/user-format')
 
 const initialUsers = [
   {
-    username: "lollero96",
-    name: "Lollero von Lollerson",
+    username: 'lollero96',
+    name: 'Lollero von Lollerson',
     adult: true,
-    passwordHash: "$2a$10$JIoApn2oDnFcwBJ4bTF7meMPm6upJJaNHMJe2PbzSo8GKLcidKj8C"
+    passwordHash: '$2a$10$JIoApn2oDnFcwBJ4bTF7meMPm6upJJaNHMJe2PbzSo8GKLcidKj8C'
   }
 ]
 

@@ -15,11 +15,11 @@ const orderAuthorsByBlogCount = (blogs) => {
     groups[author] += 1
     return groups
   }, {})
-  return blogCountByAuthorAsArray = Object.entries(blogCountByAuthor)
-                                    .map(o => {
-                                      return { author: o[0], blogs: o[1] }
-                                    })
-                                    .sort((o1, o2) => o2.blogs - o1.blogs)
+  return Object.entries(blogCountByAuthor)
+    .map(o => {
+      return { author: o[0], blogs: o[1] }
+    })
+    .sort((o1, o2) => o2.blogs - o1.blogs)
 }
 
 const orderAuthorsByLikeCount = (blogs) => {
@@ -30,11 +30,11 @@ const orderAuthorsByLikeCount = (blogs) => {
     groups[author] += likes
     return groups
   }, {})
-  return blogCountByAuthorAsArray = Object.entries(blogCountByAuthor)
-                                    .map(o => {
-                                      return { author: o[0], likes: o[1] }
-                                    })
-                                    .sort((o1, o2) => o2.likes - o1.likes)
+  return  Object.entries(blogCountByAuthor)
+    .map(o => {
+      return { author: o[0], likes: o[1] }
+    })
+    .sort((o1, o2) => o2.likes - o1.likes)
 }
 
 const mostBlogs = (blogs) => {

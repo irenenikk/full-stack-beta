@@ -1,4 +1,4 @@
-const blogsRouter = require('express').Router();
+const blogsRouter = require('express').Router()
 const formatBlog = require('../utils/blog-format')
 const Blog = require('../models/blog')
 const User = require('../models/user')
@@ -7,10 +7,10 @@ const jwt = require('jsonwebtoken')
 const validateBlog = (blog) => {
   let errors = []
   if (!blog.title) {
-    errors.push("Blog must have a title")
+    errors.push('Blog must have a title')
   }
   if (!blog.url) {
-    errors.push("Blog must have an url")
+    errors.push('Blog must have an url')
   }
   return errors
 }
@@ -34,20 +34,20 @@ blogsRouter.post('/', async (request, response) => {
     const blog = request.body
     const errors = validateBlog(blog)
     if (errors.length > 0) {
-      return response.status(400).send(errors.join("\n"))
+      return response.status(400).send(errors.join('\n'))
     }
     const user = await User.findById(decodedToken.id)
     const blogObj = await
-                    new Blog({
-                        ...blog,
-                        likes: (blog.likes? blog.likes : 0),
-                        user: user._id
-                      })
-                      .save()
+      new Blog({
+        ...blog,
+        likes: (blog.likes? blog.likes : 0),
+        user: user._id
+      })
+        .save()
     saveBlogToUser(blogObj, user)
     response.json(formatBlog(blogObj))
   } catch (e) {
-    response.status(400).send("Could not create blog")
+    response.status(400).send('Could not create blog')
   }
 })
 
@@ -56,7 +56,7 @@ blogsRouter.delete('/:id', async (request, response) => {
   if (!request.token || !decodedToken.id) {
     return response.status(401).send('Invalid or missing token')
   }
-try {
+  try {
     const id = request.params.id
     const blog = await Blog.findById(id)
     if (decodedToken.id !== blog.user.toString()) {
@@ -65,7 +65,7 @@ try {
     await blog.remove()
     response.json(blog)
   } catch (e) {
-    response.status(400).send("Could not remove blog")
+    response.status(400).send('Could not remove blog')
   }
 })
 
@@ -78,7 +78,7 @@ blogsRouter.put('/:id', async (request, response) => {
     const newBlog = request.body
     const errors = validateBlog(newBlog)
     if (errors.length > 0) {
-      return response.status(400).send(errors.join("\n"))
+      return response.status(400).send(errors.join('\n'))
     }
     const id = request.params.id
     const blog = await Blog.findById(id)
@@ -89,7 +89,7 @@ blogsRouter.put('/:id', async (request, response) => {
     const updatedBlog = await Blog.findById(id)
     response.status(201).json(updatedBlog)
   } catch (e) {
-    response.status(400).send("Could not update blog")
+    response.status(400).send('Could not update blog')
   }
 })
 

@@ -78,12 +78,12 @@ describe('blog statistics', () => {
 
   test('mostBlogs returns gives the author with most blogs', () => {
     const fave = listHelper.mostBlogs(threeBlogList)
-    expect(fave).toEqual({ author: "Person", blogs: 2 })
+    expect(fave).toEqual({ author: 'Person', blogs: 2 })
   })
 
   test('when list only contains one blog, mostBlogs returns that blog', () => {
     const fave = listHelper.mostBlogs(oneBlogList)
-    expect(fave).toEqual({ author: "Edsger W. Dijkstra", blogs: 1 })
+    expect(fave).toEqual({ author: 'Edsger W. Dijkstra', blogs: 1 })
   })
 
   test('mostBlog returns undefined with an empty list', () => {
@@ -93,12 +93,12 @@ describe('blog statistics', () => {
 
   test('mostLikes return gives the author with most likes', () => {
     const popular = listHelper.mostLikes(threeBlogList)
-    expect(popular).toEqual({ author: "Person", likes: 6 })
+    expect(popular).toEqual({ author: 'Person', likes: 6 })
   })
 
   test('when list only contains one blog, mostLIkes returns that blog', () => {
     const popular = listHelper.mostLikes(oneBlogList)
-    expect(popular).toEqual({ author: "Edsger W. Dijkstra", likes: 5 })
+    expect(popular).toEqual({ author: 'Edsger W. Dijkstra', likes: 5 })
   })
 
   test('mostLikes returns undefined with an empty list', () => {

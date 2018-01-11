@@ -7,8 +7,6 @@ const {
   initialBlogs,
   blogsInDb,
   nonExistingBlogId,
-  validBlogId,
-  blogById,
   getExistingBlog
 } = require('./blog-test-helper')
 const baseUrl = '/api/blogs'
@@ -25,16 +23,16 @@ describe('when some blogs have already been added to the database', () => {
 
   test('blogs are returned in json', async () => {
     await api
-          .get(baseUrl)
-          .expect(200)
-          .expect('Content-Type', /application\/json/)
+      .get(baseUrl)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
   })
 
   test('all initial blogs are returned in root url', async () => {
     const blogsInDatabase = await blogsInDb()
     const response = await api.get(baseUrl)
     const content = response.body
-                    .map(formatBlog)
+      .map(formatBlog)
     blogsInDatabase.forEach(b => expect(content).toContainEqual(b))
   })
 
@@ -43,16 +41,16 @@ describe('when some blogs have already been added to the database', () => {
     test('if it\'s valid it is added', async () => {
       const blogsInDatabase = await blogsInDb()
       const newBlog =   {
-        title: "The Rise of ``Worse is Better''",
+        title: 'The Rise of \'Worse is Better\'\'',
         author: 'Richard Gabriel',
         url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Worse_is_Better',
         likes: 3,
       }
       await api
-            .post(baseUrl)
-            .send(newBlog)
-            .expect(200)
-            .expect('Content-Type', /application\/json/)
+        .post(baseUrl)
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
       const blogsInDatabaseAfterOp = await blogsInDb()
       expect(blogsInDatabaseAfterOp.length).toBe(blogsInDatabase.length + 1)
       expect(blogsInDatabaseAfterOp).toContainEqual(newBlog)
@@ -60,16 +58,16 @@ describe('when some blogs have already been added to the database', () => {
 
     test('if it\'s likes is empty it is set to zero', async () => {
       const newBlogWithoutLikes =   {
-        title: "The Rise of Lollero",
+        title: 'The Rise of Lollero',
         author: 'Lollero Lolled',
         url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/lollero.html',
       }
       await api
-            .post(baseUrl)
-            .send(newBlogWithoutLikes)
-            .expect(200)
-            .expect('Content-Type', /application\/json/)
-      const response = await api.get(baseUrl)
+        .post(baseUrl)
+        .send(newBlogWithoutLikes)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+      await api.get(baseUrl)
       const blogsInDatabase = await blogsInDb()
       newBlogWithoutLikes.likes = 0
       expect(blogsInDatabase).toContainEqual(newBlogWithoutLikes)
@@ -80,22 +78,22 @@ describe('when some blogs have already been added to the database', () => {
         author: 'Lollero von Lollerson'
       }
       const response = await api
-            .post(baseUrl)
-            .send(newBlogWithoutTitleOrUrl)
+        .post(baseUrl)
+        .send(newBlogWithoutTitleOrUrl)
       expect(response.status).toBe(400)
-      expect(response.error.text).toContain("title")
-      expect(response.error.text).toContain("url")
+      expect(response.error.text).toContain('title')
+      expect(response.error.text).toContain('url')
     })
   })
 
   describe('when deleting a blog', () => {
 
-    test('removes a blog by valid id from database and returns removed blog', async () => {
+    test('removes a blog by valid id from database and returns removed blog if creator logged in', async () => {
       const blog = await getExistingBlog()
       const blogsBeforeOp = await blogsInDb()
 
       const response = await api
-                              .delete(`${baseUrl}/${blog._id}`)
+        .delete(`${baseUrl}/${blog._id}`)
       const blogsAfterOp = await blogsInDb()
 
       expect(formatBlog(response.body)).toEqual(formatBlog(blog))
@@ -106,9 +104,9 @@ describe('when some blogs have already been added to the database', () => {
     test('returns 400 and error message if called with a non valid id', async () => {
       const id = await nonExistingBlogId()
       const response = await api
-                              .delete(`${baseUrl}/${id}`)
+        .delete(`${baseUrl}/${id}`)
       expect(response.status).toBe(400)
-      expect(response.error.text).toContain("Could not remove")
+      expect(response.error.text).toContain('Could not remove')
     })
 
   })
@@ -119,8 +117,8 @@ describe('when some blogs have already been added to the database', () => {
       const blog = await getExistingBlog()
       blog.likes = blog.likes + 1
       const response = await api
-                              .put(`${baseUrl}/${blog._id}`)
-                              .send(blog)
+        .put(`${baseUrl}/${blog._id}`)
+        .send(blog)
       expect(response.status).toBe(201)
       expect(formatBlog(response.body)).toEqual(formatBlog(blog))
     })
