@@ -30,27 +30,38 @@ blogsRouter.post('/', async (request, response) => {
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'Invalid or missing token' })
   }
-  const blog = request.body
-  const errors = validateBlog(blog)
-  if (errors.length > 0) {
-    return response.status(400).send(errors.join("\n"))
+  try {
+    const blog = request.body
+    const errors = validateBlog(blog)
+    if (errors.length > 0) {
+      return response.status(400).send(errors.join("\n"))
+    }
+    const user = await User.findById(decodedToken.id)
+    const blogObj = await
+                    new Blog({
+                        ...blog,
+                        likes: (blog.likes? blog.likes : 0),
+                        user: user._id
+                      })
+                      .save()
+    saveBlogToUser(blogObj, user)
+    response.json(formatBlog(blogObj))
+  } catch (e) {
+    response.status(400).send("Could not create blog")
   }
-  const user = await User.findById(decodedToken.id)
-  const blogObj = await
-                  new Blog({
-                      ...blog,
-                      likes: (blog.likes? blog.likes : 0),
-                      user: user._id
-                    })
-                    .save()
-  saveBlogToUser(blogObj, user)
-  response.json(formatBlog(blogObj))
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  try {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).send('Invalid or missing token')
+  }
+try {
     const id = request.params.id
     const blog = await Blog.findById(id)
+    if (decodedToken.id !== blog.user.toString()) {
+      return response.status(401).send('You can only delete blogs created by you.')
+    }
     await blog.remove()
     response.json(blog)
   } catch (e) {
@@ -59,14 +70,23 @@ blogsRouter.delete('/:id', async (request, response) => {
 })
 
 blogsRouter.put('/:id', async (request, response) => {
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({ error: 'Invalid or missing token' })
+  }
   try {
-    const blog = request.body
-    const errors = validateBlog(blog)
+    const newBlog = request.body
+    const errors = validateBlog(newBlog)
     if (errors.length > 0) {
       return response.status(400).send(errors.join("\n"))
     }
-    await Blog.findByIdAndUpdate(request.params.id, blog)
-    const updatedBlog = await Blog.findById(request.params.id)
+    const id = request.params.id
+    const blog = await Blog.findById(id)
+    if (decodedToken.id !== blog.user.toString()) {
+      return response.status(401).send('You can only update blogs created by you.')
+    }
+    await Blog.findByIdAndUpdate(id, newBlog)
+    const updatedBlog = await Blog.findById(id)
     response.status(201).json(updatedBlog)
   } catch (e) {
     response.status(400).send("Could not update blog")

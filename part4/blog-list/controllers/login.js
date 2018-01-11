@@ -12,21 +12,21 @@ const isPasswordCorrect = async (password, user) => {
 loginRouter.post('/', async (request, response) => {
   const body = request.body
 
-  const user = await User.findOne({ username: body.username })
-  const passwordCorrect = await isPasswordCorrect(body.password, user)
-
-  if (!(user && passwordCorrect)) {
-    return response.status(401).send({ error: 'Username or password is invalid' })
+  try {
+    const user = await User.findOne({ username: body.username })
+    const passwordCorrect = await isPasswordCorrect(body.password, user)
+    if (!(user && passwordCorrect)) {
+      return response.status(401).send({ error: 'Username or password is invalid' })
+    }
+    const userForToken = {
+      username: user.username,
+      id: user._id
+    }
+    const token = jwt.sign(userForToken, process.env.SECRET)
+    response.status(200).send({ token, username: user.username, name: user.name })
+  } catch (e) {
+    response.status(500).send("Login failed")
   }
-
-  const userForToken = {
-    username: user.username,
-    id: user._id
-  }
-
-  const token = jwt.sign(userForToken, process.env.SECRET)
-
-  response.status(200).send({ token, username: user.username, name: user.name })
 })
 
 module.exports = loginRouter
