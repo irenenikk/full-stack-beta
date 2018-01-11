@@ -12,16 +12,16 @@ const validateBlog = (blog) => {
   return errors
 }
 
-blogsRouter.get('', async (request, response) => {
+blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find()
   response.json(blogs)
 })
 
-blogsRouter.post('', async (request, response) => {
-  const blog = request.body
+blogsRouter.post('/', async (request, response) => {
+  const blog = request. body
   const errors = validateBlog(blog)
   if (errors.length > 0) {
-    return response.status(400).json(errors)
+    return response.status(400).send(errors.join("\n"))
   }
   const blogObj = await
                   new Blog({
@@ -29,7 +29,33 @@ blogsRouter.post('', async (request, response) => {
                       likes: (blog.likes? blog.likes : 0)
                     })
                     .save()
-  response.status(201).json(blogObj)
+  response.json(blogObj)
+})
+
+blogsRouter.delete('/:id', async (request, response) => {
+  try {
+    const id = request.params.id
+    const blog = await Blog.findById(id)
+    await blog.remove()
+    response.json(blog)
+  } catch (e) {
+    response.status(400).send("Could not remove blog")
+  }
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  try {
+    const blog = request.body
+    const errors = validateBlog(blog)
+    if (errors.length > 0) {
+      return response.status(400).send(errors.join("\n"))
+    }
+    await Blog.findByIdAndUpdate(request.params.id, blog)
+    const updatedBlog = await Blog.findById(request.params.id)
+    response.status(201).json(updatedBlog)
+  } catch (e) {
+    response.status(400).send("Could not update blog")
+  }
 })
 
 module.exports = blogsRouter
