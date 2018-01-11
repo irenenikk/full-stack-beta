@@ -1,5 +1,8 @@
 const blogsRouter = require('express').Router();
+const formatBlog = require('../utils/blog-format')
 const Blog = require('../models/blog')
+const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 const validateBlog = (blog) => {
   let errors = []
@@ -12,24 +15,36 @@ const validateBlog = (blog) => {
   return errors
 }
 
+const saveBlogToUser = async (blog, user) => {
+  user.blogs = user.blogs.concat(blog)
+  await user.save()
+}
+
 blogsRouter.get('/', async (request, response) => {
-  const blogs = await Blog.find()
+  const blogs = await Blog.find().populate('user')
   response.json(blogs)
 })
 
 blogsRouter.post('/', async (request, response) => {
-  const blog = request. body
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({ error: 'Invalid or missing token' })
+  }
+  const blog = request.body
   const errors = validateBlog(blog)
   if (errors.length > 0) {
     return response.status(400).send(errors.join("\n"))
   }
+  const user = await User.findById(decodedToken.id)
   const blogObj = await
                   new Blog({
                       ...blog,
-                      likes: (blog.likes? blog.likes : 0)
+                      likes: (blog.likes? blog.likes : 0),
+                      user: user._id
                     })
                     .save()
-  response.json(blogObj)
+  saveBlogToUser(blogObj, user)
+  response.json(formatBlog(blogObj))
 })
 
 blogsRouter.delete('/:id', async (request, response) => {

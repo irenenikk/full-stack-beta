@@ -1,5 +1,5 @@
 const Blog = require('../models/blog')
-const { formatBlog } = require('../utils/blog-format')
+const formatBlog = require('../utils/blog-format')
 
 const initialBlogs = [
   {
@@ -22,14 +22,14 @@ const initialBlogs = [
   }
 ]
 
-const nonExistingId = async () => {
+const nonExistingBlogId = async () => {
   const blog = new Blog();
   await blog.save()
   await blog.remove()
   return blog._id.toString()
 }
 
-const validId = async () => {
+const validBlogId = async () => {
   const blogs = await Blog.find()
   return blogs[0]._id
 }
@@ -52,8 +52,8 @@ const getExistingBlog = async () => {
 module.exports = {
   initialBlogs,
   blogsInDb,
-  nonExistingId,
-  validId,
+  nonExistingBlogId,
+  validBlogId,
   blogById,
   getExistingBlog
 }

@@ -2,15 +2,15 @@ const supertest = require('supertest')
 const { app, server } = require('../index')
 const api = supertest(app)
 const Blog = require('../models/blog')
-const  { formatBlog } = require('../utils/blog-format')
+const  formatBlog = require('../utils/blog-format')
 const {
   initialBlogs,
   blogsInDb,
-  nonExistingId,
-  validId,
+  nonExistingBlogId,
+  validBlogId,
   blogById,
   getExistingBlog
-} = require('../tests/test-helper')
+} = require('./blog-test-helper')
 const baseUrl = '/api/blogs'
 
 beforeAll(async () => {
@@ -104,7 +104,7 @@ describe('when some blogs have already been added to the database', () => {
     })
 
     test('returns 400 and error message if called with a non valid id', async () => {
-      const id = await nonExistingId()
+      const id = await nonExistingBlogId()
       const response = await api
                               .delete(`${baseUrl}/${id}`)
       expect(response.status).toBe(400)
