@@ -11,19 +11,20 @@ export default ({
     handleNewBlogFieldChange,
     newBlog,
     handleNewBlogSubmit,
-    onLike
+    onLike,
+    handleDeleteBlog
   }) => {
   return (
     <div>
       <UserInfo user={user} onLogout={onLogout} />
-      <Togglable buttonLabel="New Blog">
-        <BlogForm
-          handleNewBlogFieldChange={handleNewBlogFieldChange}
-          newBlog={newBlog}
-          handleNewBlogSubmit={handleNewBlogSubmit}
-        />
-      </Togglable>
-      <Blogs blogs={blogs} onLike={onLike}/>
+        <Togglable buttonLabel="New Blog">
+          <BlogForm
+            handleNewBlogFieldChange={handleNewBlogFieldChange}
+            newBlog={newBlog}
+            handleNewBlogSubmit={handleNewBlogSubmit}
+          />
+        </Togglable>
+        <Blogs currentUser={user} blogs={blogs} onLike={onLike} handleDelete={handleDeleteBlog}/>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({ blog, toggleShowFullInfo, onLike }) => {
+export default ({ blog, toggleShowFullInfo, onLike, showDelete, handleDelete }) => {
   return (
     <div className="fancy-blog">
       <h3 onClick={toggleShowFullInfo}>
@@ -20,6 +20,10 @@ export default ({ blog, toggleShowFullInfo, onLike }) => {
       {
         blog.user &&
         <div>Created by {blog.user.username}</div>
+      }
+      {
+        showDelete &&
+        <button onClick={() => handleDelete(blog)}>Delete</button>
       }
     </div>
   )

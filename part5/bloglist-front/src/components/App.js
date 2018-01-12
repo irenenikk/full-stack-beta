@@ -125,7 +125,19 @@ class App extends React.Component {
       } catch (e) {
         this.handleError(e)
       }
+    }
 
+    handleDeleteBlog = async (blog) => {
+      if (window.confirm(`Delete ${blog.title}?`)) {
+        try {
+          await blogService.deleteBlog(blog, this.state.user.token)
+          const blogs = await blogService.getAll()
+          this.setState({ blogs })
+          this.createNotification({ message: `Deleted blog ${blog.title} by ${blog.author}` })
+        } catch (e) {
+          this.handleError(e)
+        }
+      }
     }
 
     render() {
@@ -150,6 +162,7 @@ class App extends React.Component {
               newBlog={this.state.newBlog}
               handleNewBlogSubmit={this.handleNewBlogSubmit}
               onLike={this.handleBlogLike}
+              handleDeleteBlog={this.handleDeleteBlog}
             />
           }
         </div>

@@ -17,7 +17,7 @@ export default class Blog extends React.Component {
       <div className="blog ">
         {
           this.state.showFullInfo ?
-          <FancyBlog blog={this.props.blog} toggleShowFullInfo={this.toggleShowFullInfo} onLike={this.props.onLike}/>
+          <FancyBlog blog={this.props.blog} toggleShowFullInfo={this.toggleShowFullInfo} onLike={this.props.onLike} showDelete={this.props.showDelete} handleDelete={this.props.handleDelete}/>
           :
           <ModestBlog blog={this.props.blog} toggleShowFullInfo={this.toggleShowFullInfo}/>
         }
