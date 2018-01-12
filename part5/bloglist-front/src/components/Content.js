@@ -1,7 +1,8 @@
 import React from 'react'
-import Blogs from './Blogs'
-import BlogForm from './BlogForm'
+import Blogs from './Blogs/Blogs'
+import BlogForm from './Forms/BlogForm'
 import UserInfo from './UserInfo'
+import Togglable from './Togglable'
 
 export default ({
     user,
@@ -9,17 +10,20 @@ export default ({
     onLogout,
     handleNewBlogFieldChange,
     newBlog,
-    handleNewBlogSubmit
+    handleNewBlogSubmit,
+    onLike
   }) => {
   return (
     <div>
       <UserInfo user={user} onLogout={onLogout} />
-      <BlogForm
-        handleNewBlogFieldChange={handleNewBlogFieldChange}
-        newBlog={newBlog}
-        handleNewBlogSubmit={handleNewBlogSubmit}
-      />
-      <Blogs blogs={blogs} />
+      <Togglable buttonLabel="New Blog">
+        <BlogForm
+          handleNewBlogFieldChange={handleNewBlogFieldChange}
+          newBlog={newBlog}
+          handleNewBlogSubmit={handleNewBlogSubmit}
+        />
+      </Togglable>
+      <Blogs blogs={blogs} onLike={onLike}/>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from './LoginForm'
+import LoginForm from './Forms/LoginForm'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
 import Content from './Content'
@@ -116,6 +116,18 @@ class App extends React.Component {
       }, 5000);
     }
 
+    handleBlogLike = async (blog) => {
+      try {
+        await blogService.updateBlog(blog, this.state.user.token)
+        const blogs = await blogService.getAll()
+        this.setState({ blogs })
+        this.createNotification({ message: `Updated blog ${blog.title} by ${blog.author}` })
+      } catch (e) {
+        this.handleError(e)
+      }
+
+    }
+
     render() {
       return (
         <div>
@@ -137,6 +149,7 @@ class App extends React.Component {
               handleNewBlogFieldChange={this.handleNewBlogFieldChange}
               newBlog={this.state.newBlog}
               handleNewBlogSubmit={this.handleNewBlogSubmit}
+              onLike={this.handleBlogLike}
             />
           }
         </div>

@@ -2,29 +2,29 @@ import axios from 'axios'
 
 const url = `${process.env.REACT_APP_BASEURL}/blogs`
 
-const tokenize = (token) => {
-  return `bearer ${token}`
+const getConfig = (authorization) => {
+  const token = `bearer ${authorization}`
+  return {
+    headers: { 'Authorization': token }
+  }
 }
 
-const handleResponse = (response) => {
-  if (response.statusText !== "OK") {
-    throw new Error(response.data)
-  }
-  return response.data
-}
 
 const getAll = async () => {
   const response = await axios.get(url)
-  return handleResponse(response)
+  return response.data
 }
 
-const postNewBlog = async (newBlog, authorization) => {
-  const token = tokenize(authorization)
-  const config = {
-    headers: { 'Authorization': token }
-  }
+const postNewBlog = async (newBlog, token) => {
+  const config = getConfig(token)
   const response = await axios.post(url, newBlog, config)
-  return handleResponse(response)
+  return response.data
 }
 
-export default { getAll, postNewBlog }
+const updateBlog = async (newBlog, token) => {
+  const config = getConfig(token)
+  const response = await axios.put(`${url}/${newBlog._id}`, newBlog, config)
+  return response.data
+}
+
+export default { getAll, postNewBlog, updateBlog }

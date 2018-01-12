@@ -34,3 +34,17 @@ body {
   border-width: 0.5rem;
   border-style: solid;
 }
+
+.invisible {
+  display: none;
+}
+
+.blog {
+  border-style: solid;
+  border-width: 0.01rem;
+  padding: 0.2rem;
+}
+
+.fancy-blog {
+  text-align: center;
+}
