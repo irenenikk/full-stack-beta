@@ -1,8 +1,8 @@
 import React from 'react'
-import Blogs from './Blogs'
 import LoginForm from './LoginForm'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
+import Content from './Content'
 
 class App extends React.Component {
 
@@ -46,7 +46,10 @@ class App extends React.Component {
           }
           {
             this.state.user !== undefined &&
-            <Blogs blogs={this.state.blogs}/>
+            <Content
+              user={this.state.user}
+              blogs={this.state.blogs}
+            />
           }
         </div>
       );
