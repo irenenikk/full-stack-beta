@@ -3,7 +3,7 @@ import Blog from './Blog'
 
 export default ({ blogs }) => {
   return (
-    <div>
+    <div className="blogs">
       <h2>Blogs</h2>
       {
         blogs.map(blog =>

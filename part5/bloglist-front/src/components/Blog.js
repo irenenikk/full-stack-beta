@@ -2,6 +2,9 @@ import React from 'react'
 
 export default ({ blog }) => {
   return (
-    <div>{blog.author}: {blog.title}</div>
+    <div>
+      <a href={blog.url}>{blog.title}</a>
+      <span> by {blog.author}</span>
+    </div>
   )
 }
