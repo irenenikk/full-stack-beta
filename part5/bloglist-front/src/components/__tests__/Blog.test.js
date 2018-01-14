@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import ModestBlog from '../Blogs/ModestBlog'
 import FancyBlog from '../Blogs/FancyBlog'
 import Blog from '../Blogs/Blog'

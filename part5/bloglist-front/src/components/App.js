@@ -145,25 +145,30 @@ class App extends React.Component {
         <div>
           { this.state.notification && <Notification notification={this.state.notification} /> }
           { this.state.user === undefined &&
-            <LoginForm
-              onLogin={this.login}
-              handleLoginFieldChange={this.handleLoginFieldChange}
-              username={this.state.usernameField}
-              password={this.state.passwordField}
-            />
+            <div className="login-form">
+              <LoginForm
+                onLogin={this.login}
+                handleLoginFieldChange={this.handleLoginFieldChange}
+                username={this.state.usernameField}
+                password={this.state.passwordField}
+              />
+            </div>
           }
           {
             this.state.user !== undefined &&
-            <Content
-              user={this.state.user}
-              blogs={this.state.blogs}
-              onLogout={this.logout}
-              handleNewBlogFieldChange={this.handleNewBlogFieldChange}
-              newBlog={this.state.newBlog}
-              handleNewBlogSubmit={this.handleNewBlogSubmit}
-              onLike={this.handleBlogLike}
-              handleDeleteBlog={this.handleDeleteBlog}
-            />
+            <div className="content">
+              <Content
+                className="content"
+                user={this.state.user}
+                blogs={this.state.blogs}
+                onLogout={this.logout}
+                handleNewBlogFieldChange={this.handleNewBlogFieldChange}
+                newBlog={this.state.newBlog}
+                handleNewBlogSubmit={this.handleNewBlogSubmit}
+                onLike={this.handleBlogLike}
+                handleDeleteBlog={this.handleDeleteBlog}
+              />
+            </div>
           }
         </div>
       );
