@@ -1,30 +1,31 @@
 import React from 'react'
 
 export default ({ blog, toggleShowFullInfo, onLike, showDelete, handleDelete }) => {
-  return (
-    <div className="fancy-blog">
-      <h3 onClick={toggleShowFullInfo}>
-        {blog.title}
-      </h3>
-      <h4> by {blog.author}</h4>
-      <a href={blog.url}>LINK</a>
-      <div>Likes: {blog.likes}</div>
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          onLike({ ...blog, likes: blog.likes + 1 })
-        }}
-      >
+    return (
+        <div>
+            <h3 onClick={toggleShowFullInfo}>
+                {blog.title}
+            </h3>
+            <h4> by {blog.author}</h4>
+            <a href={blog.url}>LINK</a>
+            <div className="blog-likes" >Likes: {blog.likes}</div>
+            <button
+                className="blog-like-button"
+                onClick={(e) => {
+                    e.preventDefault()
+                    onLike({ ...blog, likes: blog.likes + 1 })
+                }}
+            >
         Like
-      </button>
-      {
-        blog.user &&
+            </button>
+            {
+                blog.user &&
         <div>Created by {blog.user.username}</div>
-      }
-      {
-        showDelete &&
+            }
+            {
+                showDelete &&
         <button onClick={() => handleDelete(blog)}>Delete</button>
-      }
-    </div>
-  )
+            }
+        </div>
+    )
 }
