@@ -1,5 +1,5 @@
 import { CHANGE_FILTER, CLEAR_FILTER } from '../actions/filterActions'
-import { VOTE_ANECDOTE, CREATE_ANECDOTE } from '../actions/anecdoteActions'
+import { VOTE_ANECDOTE, CREATE_ANECDOTE, SET_ALL_ANECDOTES } from '../actions/anecdoteActions'
 
 const anecdotesAtStart = [
   'If it hurts, do it more often',
@@ -12,7 +12,7 @@ const anecdotesAtStart = [
 
 const getId = () => (100000*Math.random()).toFixed(0)
 
-const asObject = (anecdote) => {
+export const asObject = (anecdote) => {
   return {
     content: anecdote,
     id: getId(),
@@ -23,11 +23,16 @@ const asObject = (anecdote) => {
 const anecdotes = anecdotesAtStart.map(asObject)
 
 const initialState = {
-  anecdotes,
+  anecdotes: [],
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_ALL_ANECDOTES:
+      return {
+        ...state,
+        anecdotes: action.anecdotes
+      }
     case VOTE_ANECDOTE:
       const old = state.anecdotes.filter(a => a.id !==action.id)
       const voted = state.anecdotes.find(a => a.id === action.id)

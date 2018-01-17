@@ -1,20 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createAnecdote } from '../actions/anecdoteActions'
+import { setAllAnecdotes, createAnecdote } from '../actions/anecdoteActions'
 import { setNotification, clearNotification } from '../actions/notificationActions'
+import anecdoteService from '../services/anecdoteService'
+import { asObject } from '../reducers/anecdoteReducer'
 
 class AnecdoteForm extends React.Component {
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault()
     const content = e.target.anecdote.value
-    this.props.createAnecdote(content)
-    this.props.setNotification(`Anecdote ${content} crated successfully`)
-    setTimeout(() => {
-      this.props.clearNotification()
-    }, 5000);
+    const newAnecdote = asObject(content)
+    try {
+      const anecdote = await anecdoteService.createNew(newAnecdote)
+      this.props.createAnecdote(content)
+      this.props.setNotification(`Anecdote ${content} crated successfully`)
+      setTimeout(() => {
+        this.props.clearNotification()
+      }, 5000);
+      e.target.anecdote.value = ''
+    } catch (e) {
+      console.log(e)
+    }
 
-    e.target.anecdote.value = ''
   }
    render() {
      return (
@@ -30,6 +38,7 @@ class AnecdoteForm extends React.Component {
 }
 
 const mapDispatchToProps = {
+  setAllAnecdotes,
   createAnecdote,
   setNotification,
   clearNotification
