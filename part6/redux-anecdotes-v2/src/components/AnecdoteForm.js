@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setAllAnecdotes, createAnecdote } from '../actions/anecdoteActions'
-import { setNotification, clearNotification } from '../actions/notificationActions'
+import { notify } from '../actions/notificationActions'
 import anecdoteService from '../services/anecdoteService'
 import { asObject } from '../reducers/anecdoteReducer'
 
@@ -12,17 +12,12 @@ class AnecdoteForm extends React.Component {
     const content = e.target.anecdote.value
     const newAnecdote = asObject(content)
     try {
-      const anecdote = await anecdoteService.createNew(newAnecdote)
       this.props.createAnecdote(content)
-      this.props.setNotification(`Anecdote ${content} crated successfully`)
-      setTimeout(() => {
-        this.props.clearNotification()
-      }, 5000);
+      this.props.notify(`Anecdote ${content} crated successfully`, 5)
       e.target.anecdote.value = ''
     } catch (e) {
       console.log(e)
     }
-
   }
    render() {
      return (
@@ -39,9 +34,7 @@ class AnecdoteForm extends React.Component {
 
 const mapDispatchToProps = {
   setAllAnecdotes,
-  createAnecdote,
-  setNotification,
-  clearNotification
+  notify,
 }
 
 export default connect(null, mapDispatchToProps)(AnecdoteForm)

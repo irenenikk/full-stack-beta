@@ -13,3 +13,12 @@ export const clearNotification = () => {
     type: CLEAR_NOTIFICATION,
   }
 }
+
+export const notify = (message, sleep) => {
+  return async (dispatch) => {
+    dispatch(setNotification(message))
+    setTimeout(() => {
+      dispatch(clearNotification())
+    }, sleep * 1000);
+  }
+}

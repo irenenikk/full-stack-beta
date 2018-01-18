@@ -1,13 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Notification from './components/Notification'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
+import { setAllAnecdotes } from './actions/anecdoteActions'
 
 class App extends React.Component {
 
+  componentWillMount = async () => {
+    try {
+      this.props.setAllAnecdotes()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   render() {
-    const anecdotes = this.props.store.getState()
     return (
       <div>
         <h1>Programming anecdotes</h1>
@@ -20,4 +29,8 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapDispatchToProps = {
+  setAllAnecdotes
+}
+
+export default connect(null, mapDispatchToProps)(App)

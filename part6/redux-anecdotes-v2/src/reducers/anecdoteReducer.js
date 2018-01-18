@@ -1,4 +1,3 @@
-import { CHANGE_FILTER, CLEAR_FILTER } from '../actions/filterActions'
 import { VOTE_ANECDOTE, CREATE_ANECDOTE, SET_ALL_ANECDOTES } from '../actions/anecdoteActions'
 
 const anecdotesAtStart = [
@@ -34,16 +33,15 @@ export default (state = initialState, action) => {
         anecdotes: action.anecdotes
       }
     case VOTE_ANECDOTE:
-      const old = state.anecdotes.filter(a => a.id !==action.id)
-      const voted = state.anecdotes.find(a => a.id === action.id)
+      const oldAnecdotes = state.anecdotes.filter(a => a.id !== action.updatedAnecdote.id)
       return {
         ...state,
-        anecdotes: [...old, { ...voted, votes: voted.votes+1} ]
+        anecdotes: [...oldAnecdotes, action.updatedAnecdote]
       }
     case CREATE_ANECDOTE:
       return {
         ...state,
-        anecdotes:[...state.anecdotes, { content: action.content, id: getId(), votes: 0 }],
+        anecdotes:[...state.anecdotes, action.newAnecdote],
       }
     }
   return state
