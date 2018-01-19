@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 
 export default class CreateNew extends React.Component {
   constructor() {
@@ -43,7 +44,7 @@ export default class CreateNew extends React.Component {
             url for more info
             <input name='info' value={this.state.info} onChange={this.handleChange} />
           </div>
-          <button>create</button>
+          <Button bsStyle="primary" >create</Button>
         </form>
       </div>
     )

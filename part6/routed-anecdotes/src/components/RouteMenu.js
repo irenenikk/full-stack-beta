@@ -1,14 +1,23 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
+
+const activeStyles = {
+  fontStyle: 'italic'
+}
+
+const menuStyles = {
+  backgroundColor: '#e1e5ed',
+  padding: '0.5rem'
+}
 
 export default ({ children }) => {
   if (Array.isArray(children)) {
     return (
       <div>
-        <div>
+        <div style={menuStyles}>
           {
             children.map(c => {
-            return <span key={`${c.props.name}-link`} ><Link to={c.props.path}>{c.props.name}</Link> &nbsp;</span>
+            return <span key={`${c.props.name}-link`}><NavLink activeStyle={activeStyles} to={c.props.path}>{c.props.name}</NavLink> &nbsp;</span>
           })
           }
         </div>
@@ -24,7 +33,7 @@ export default ({ children }) => {
   }
   return (
     <div>
-        <Link to={children.props.path}>{children.props.name}</Link>
+        <NavLink to={children.props.path}>{children.props.name}</NavLink>
         <Route key={`${children.props.name}-route`} exact path={children.props.path} render={({ history }) => React.cloneElement(children, { history})} />
     </div>
   )

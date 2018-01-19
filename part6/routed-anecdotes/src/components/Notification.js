@@ -1,3 +1,13 @@
 import React from 'react'
 
-export default ({ notification }) => <div>{notification}</div>
+const styles = {
+  padding: '0.5rem',
+  color: 'green',
+}
+
+export default ({ notification }) => {
+  if (!notification) {
+    return null
+  }
+  return <div style={styles} >{notification}</div>
+}

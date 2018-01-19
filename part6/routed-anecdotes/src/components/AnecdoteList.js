@@ -1,19 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 export default ({ anecdotes }) => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      <ul>
-        {
+      <ListGroup>
+      {
           anecdotes.map(anecdote => {
             return (
-              <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>
+              <ListGroupItem key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></ListGroupItem>
             )
           })
         }
-      </ul>
+      </ListGroup>
     </div>
   )
 }

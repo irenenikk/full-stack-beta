@@ -67,15 +67,19 @@ class App extends React.Component {
     return (
       <Router>
         <div>
+          <Notification notification={this.state.notification}/>
           <h1>Software anecdotes</h1>
-            <Notification notification={this.state.notification}/>
             <RouteMenu>
               <AnecdoteList name='Anecdotes' path='/anecdotes' anecdotes={this.state.anecdotes} />
               <About name='About' path='/about' />
               <AnecdoteForm name='AnecdoteForm' path='/create_new' addNew={this.addNew} />
             </RouteMenu>
             <ShowRoutes>
-              <Anecdote path='/anecdotes/:id' findElement={(id) => this.anecdoteById(id)}/>
+              <Anecdote
+                path='/anecdotes/:id'
+                findElement={(id) => this.anecdoteById(id)}
+                handleVote={this.vote}
+              />
             </ShowRoutes>
           <Footer/>
         </div>
