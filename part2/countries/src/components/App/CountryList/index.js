@@ -17,7 +17,7 @@ export default ({ countries, onCountryClick }) => {
         {
           countries.map(c => {
             return (
-              <div onClick={onCountryClick(c)}>
+              <div key={c.name} onClick={() => onCountryClick(c)}>
                 <CountryShortList key={c.name} country={c} />
               </div>
             )
