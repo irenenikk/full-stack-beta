@@ -1,0 +1,26 @@
+{
+  "name": "pack-that-web",
+  "version": "0.0.1",
+  "description": "Pack the web to a nice package",
+  "scripts": {
+    "build": "node_modules/.bin/webpack",
+    "start": "webpack-dev-server"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "promise-polyfill": "^7.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.9",
+    "style-loader": "^0.19.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack-dev-server": "^2.11.1"
+  }
+}
