@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.user-info {
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.log-out-button {
+  margin: 0.1rem;
+}
+
+.new-blog-form {
+  padding: 1rem;
+}
+
+.blogs {
+  padding: 1rem;
+}
+
+.error {
+  border-color: red;
+}
+
+.success {
+  border-color: green;
+}
+
+.notification {
+  white-space: pre-wrap;
+  border-width: 0.5rem;
+  border-style: solid;
+}
+
+.invisible {
+  display: none;
+}
+
+.blog {
+  border-style: solid;
+  border-width: 0.01rem;
+  padding: 0.5rem;
+}
