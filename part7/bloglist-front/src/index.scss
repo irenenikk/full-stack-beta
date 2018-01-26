@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 1rem 5rem;
   font-family: sans-serif;
+  text-align: center;
 }
 
 .user-info {
@@ -17,7 +18,7 @@ body {
   padding: 1rem;
 }
 
-.blogs {
+.list {
   padding: 1rem;
 }
 
@@ -43,4 +44,24 @@ body {
   border-style: solid;
   border-width: 0.01rem;
   padding: 0.5rem;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-link {
+  padding: 0.5rem;
+  &:hover {
+    font-style: italic;
+  }
+}
+
+$list-item: rgb(219, 177, 177);
+
+.users {
+  &:nth-child(n+2) {
+    background-color: darken($list-item, 10%);
+  }
 }

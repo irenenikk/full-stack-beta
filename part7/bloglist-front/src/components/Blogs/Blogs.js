@@ -1,19 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Blog from './Blog'
+import ModestBlog from './ModestBlog'
 
 class Blogs extends React.Component  {
 
   render() {
     return (
-      <div className="blogs">
+      <div className="list">
         <h2>Blogs</h2>
         {
           this.props.blogs
             .sort((b1, b2) => b2.likes - b1.likes)
             .map(blog =>
-              <Blog
-                showDelete={!blog.user || this.props.currentUser.username === blog.user.username}
+              <ModestBlog
                 key={blog._id}
                 blog={blog}
               />
