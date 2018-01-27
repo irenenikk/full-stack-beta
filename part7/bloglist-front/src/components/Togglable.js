@@ -15,13 +15,18 @@ export default class Togglable extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="togglable">
         <div className={this.state.visible? 'invisible' : ''}>
           <button onClick={this.toggleVisibility}>{this.props.buttonLabel}</button>
         </div>
         <div className={this.state.visible? '' : 'invisible'}>
           {this.props.children}
-          <button onClick={this.toggleVisibility}>cancel</button>
+          <button
+            onClick={this.toggleVisibility}
+            className="danger"
+          >
+          &#x2716;
+          </button>
         </div>
       </div>
     )

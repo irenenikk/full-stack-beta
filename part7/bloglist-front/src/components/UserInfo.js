@@ -8,10 +8,9 @@ class UserInfo extends React.Component {
     return (
       <div className="user-info">
         <div>
-          Logged in as {this.props.user.username}
+          <div>Welcome to <span className="blogster">Blogster</span> {this.props.user.username}</div>
           <button
-            className="log-out-button"
-            type="button"
+            className="logout"
             onClick={this.props.logout}
           >
             Log out

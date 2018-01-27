@@ -1,6 +1,7 @@
 import blogService from '../../services/blogs'
 import { getAllBlogs } from '../actions/blogActions'
 import { createNotification, handleError } from './notificationActions'
+import { getAllUsers } from './userActions'
 
 export const submitBlog = (e) => {
   e.preventDefault()
@@ -13,6 +14,7 @@ export const submitBlog = (e) => {
     try {
       await blogService.postNewBlog(blog, getState().session.token)
       dispatch(getAllBlogs())
+      dispatch(getAllUsers)
       dispatch(createNotification({ message: `Created new blog ${blog.title} by ${blog.author}` }))
     } catch (e) {
       dispatch(handleError(e))

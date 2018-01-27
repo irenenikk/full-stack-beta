@@ -6,31 +6,32 @@ class BlogForm extends React.Component {
 
   render() {
     return (
-      <div className="new-blog-form" >
+      <div>
         <h2>New blog</h2>
         <form onSubmit={this.props.submitBlog}>
-          <div>
-            Title
+          <div className="new-blog-form-item" >
             <input
+              placeholder="Title"
               name="title"
             />
           </div>
-          <div>
-            Address
+          <div className="new-blog-form-item">
             <input
+              placeholder="Address"
               name="url"
             />
           </div>
-          <div>
-            Author
+          <div className="new-blog-form-item">
             <input
+              placeholder="Author"
               name="author"
             />
           </div>
           <button
+            className="new-blog-form-item"
             type="submit"
           >
-            Submit blog
+            Create
           </button>
         </form>
       </div>

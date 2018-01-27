@@ -1,4 +1,5 @@
 import React from 'react'
+import ModestBlog from '../Blogs/ModestBlog'
 
 export default ({ element }) => {
   if (!element) {
@@ -6,12 +7,14 @@ export default ({ element }) => {
   }
   return (
     <div>
-      <h2>{element.name}</h2>
-      <h3>{element.username}</h3>
-      <h4>with {element.blogs.length} blogs</h4>
+      <div className="title-wrapper">
+        <div className="big-title">{element.name}</div>
+        <div className="fancy-username" >{element.username}</div>
+      </div>
+      <div>has created {element.blogs.length} blogs</div>
       {
         element.blogs.length > 0 &&
-        element.blogs.map(b => <div key={`${b.title}-${b.author}`}>{b.title}</div>)
+        element.blogs.map(b => <div className="list-item" key={b._id}><ModestBlog blog={b} /></div>)
       }
     </div>
   )

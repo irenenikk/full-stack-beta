@@ -11,6 +11,7 @@ import Togglable from './Togglable'
 import Users from './Users/Users'
 import FancyUser from './Users/FancyUser'
 import FancyBlog from './Blogs/FancyBlog'
+import Notification from './Notification'
 
 class Content extends React.Component {
 
@@ -26,6 +27,7 @@ class Content extends React.Component {
     return (
       <div>
         <UserInfo />
+        { this.props.notification.message && <Notification /> }
         <Togglable buttonLabel="New Blog">
           <BlogForm />
         </Togglable>
@@ -44,6 +46,7 @@ class Content extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    notification: state.notification,
     users: state.users,
     blogs: state.blogs,
     currentUser: state.session

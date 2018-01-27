@@ -9,24 +9,25 @@ class Login extends React.Component {
         <h2>Login</h2>
         <form onSubmit={this.props.login}>
           <div>
-            Username
             <input
-              name="usernameField"
+              placeholder='username'
+              name='usernameField'
             />
           </div>
           <div>
-            Password
             <input
-              type="password"
-              name="passwordField"
+              placeholder='password'
+              type='password'
+              name='passwordField'
             />
           </div>
           <button
-            type="submit"
+            type='submit'
           >
                 Log in
           </button>
         </form>
+        <div>{'If you\'re lollero96 your password is lollero'}</div>
       </div>
     )
   }

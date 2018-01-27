@@ -9,10 +9,14 @@ export default ({ blogs }) => {
         blogs
           .sort((b1, b2) => b2.likes - b1.likes)
           .map(blog =>
-            <ModestBlog
+            <div
               key={blog._id}
-              blog={blog}
-            />
+              className="list-item"
+            >
+              <ModestBlog
+                blog={blog}
+              />
+            </div>
           )
       }
     </div>

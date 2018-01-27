@@ -10,7 +10,7 @@ export default ({ children }) => {
         <div className="nav-bar">
           {
             children.map(c => {
-              return <span className="nav-link" key={`${c.props.name}-link`}><NavLink to={c.props.path}>{c.props.name}</NavLink></span>
+              return <span className="nav-link link" key={`${c.props.name}-link`}><NavLink to={c.props.path}>{c.props.name}</NavLink></span>
             })
           }
         </div>

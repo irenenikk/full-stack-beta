@@ -1,15 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import ModestUser from './ModestUser'
 
 export default ({ users }) => {
   return (
-    <div className="users" >
+    <div className="list" >
       <h2>Users</h2>
       {
         users
           .sort((u1, u2) => u1.name.localeCompare(u2.name))
-          .map(user => <Link key={user._id} to={`/users/${user._id}`}><ModestUser user={user}/></Link>)
+          .map(user => {
+            return (
+              <div
+                key={user._id}
+                className="list-item"
+              >
+                <ModestUser user={user}/>
+              </div>
+            )})
       }
     </div>
   )

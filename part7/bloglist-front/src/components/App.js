@@ -10,15 +10,17 @@ class App extends React.Component {
   render() {
     if (this.props.user.username === undefined) {
       return (
-        <div className="login-form">
-          <LoginForm />
+        <div>
+          { this.props.notification.message && <Notification /> }
+          <div className="login-form">
+            <LoginForm />
+          </div>
         </div>
       )
     }
     return (
       <Router>
         <div>
-          { this.props.notification.message && <Notification /> }
           {
             this.props.user.username !== undefined &&
           <div className="content">
@@ -30,12 +32,6 @@ class App extends React.Component {
     )
   }
 }
-
-// const mapDispatchToProps = {
-//   loadSession,
-//   getAllUsers,
-//   getAllBlogs
-// }
 
 const mapStateToProps = (state) => {
   return {
