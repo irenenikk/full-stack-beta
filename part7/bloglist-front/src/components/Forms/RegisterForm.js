@@ -1,30 +1,36 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { login } from '../../state/actions/sessionActions'
+import { register } from '../../state/actions/userActions'
 
 class Login extends React.Component {
   render() {
     return (
       <div >
-        <h2>Login</h2>
-        <form onSubmit={this.props.login}>
+        <form onSubmit={this.props.register}>
           <div>
             <input
               placeholder='username'
-              name='usernameField'
+              name='username'
             />
           </div>
           <div>
             <input
               placeholder='password'
               type='password'
-              name='passwordField'
+              name='password'
+            />
+          </div>
+          <div>
+            <input
+              placeholder='repeat password'
+              type='password'
+              name='password_confirmation'
             />
           </div>
           <button
             type='submit'
           >
-            Log in
+                Register
           </button>
         </form>
       </div>
@@ -33,8 +39,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = {
-  login
+  register
 }
 
 export default connect(null, mapDispatchToProps)(Login)
-

@@ -1,5 +1,5 @@
 import loginService from '../../services/login'
-import { createNotification, handleError } from './notificationActions'
+import { createNotification, handleError, clearNotification } from './notificationActions'
 export const END_SESSION = 'END_SESSION'
 export const NEW_SESSION = 'NEW_SESSION'
 
@@ -30,6 +30,7 @@ export const login = (e) => {
         return dispatch(createNotification({ message: 'Invalid username or password', error: true }))
       }
       dispatch(newSession(response))
+      dispatch(clearNotification())
       window.localStorage.setItem(localStorageKey, JSON.stringify(response))
     } catch (e) {
       dispatch(handleError(e))

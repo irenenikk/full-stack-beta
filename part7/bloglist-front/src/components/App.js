@@ -2,8 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { HashRouter as Router } from 'react-router-dom'
 import LoginForm from './Forms/LoginForm'
+import RegisterForm from './Forms/RegisterForm'
 import Content from './Content'
 import Notification from './Notification'
+import Togglable from './Togglable'
 
 class App extends React.Component {
 
@@ -15,6 +17,10 @@ class App extends React.Component {
           <div className="login-form">
             <LoginForm />
           </div>
+          <div className="home-prompt" >Or</div>
+          <Togglable buttonLabel="Register">
+            <RegisterForm />
+          </Togglable>
         </div>
       )
     }

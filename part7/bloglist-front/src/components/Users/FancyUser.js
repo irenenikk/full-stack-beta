@@ -9,7 +9,7 @@ export default ({ element }) => {
     <div>
       <div className="title-wrapper">
         <div className="big-title">{element.name}</div>
-        <div className="fancy-username" >{element.username}</div>
+        <div className="subtitle" >{element.username}</div>
       </div>
       <div>has created {element.blogs.length} blogs</div>
       {

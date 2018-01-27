@@ -37,7 +37,7 @@ class FancyBlog extends React.Component {
             onDelete={this.handleDelete}
             showDelete={this.showDelete()}
           />
-          <div>
+          <div className="view-page">
             <a
               href={this.props.element.url}
               className="link"
@@ -47,7 +47,7 @@ class FancyBlog extends React.Component {
           </div>
           {
             this.props.element.user &&
-            <div>Created by {this.props.element.user.username}</div>
+            <div className="subtitle">Created by {this.props.element.user.username}</div>
           }
         </div>
       )

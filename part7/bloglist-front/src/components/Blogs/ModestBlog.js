@@ -7,7 +7,7 @@ export default ({ blog }) => {
       <Link key={blog._id} to={`/blogs/${blog._id}`}>
         {blog.title}
       </Link>
-      <div className="blog-author" >
+      <div className="subtitle" >
         {` ${blog.author}`}
       </div>
     </div>

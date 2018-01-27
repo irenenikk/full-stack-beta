@@ -19,18 +19,18 @@ export const createNotification = (notification) => {
     dispatch(newNotification(notification))
     setTimeout(() => {
       dispatch(clearNotification())
-    }, 5000)
+    }, 2000)
   }
 }
 
 export const handleError = (e) => {
   return async (dispatch) => {
     if (e.response) {
-      return dispatch(newNotification({ message: e.response.data, error: true }))
+      return dispatch(createNotification({ message: e.response.data, error: true }))
     }
     if (e instanceof String) {
-      return dispatch(newNotification({ message: e, error: true }))
+      return dispatch(createNotification({ message: e, error: true }))
     }
-    dispatch(newNotification({ message: 'Something went wrong', error: true }))
+    dispatch(createNotification({ message: 'Something went wrong', error: true }))
   }
 }

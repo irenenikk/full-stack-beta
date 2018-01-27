@@ -20,10 +20,6 @@ body {
   padding: 0.2rem;
 }
 
-.blog-author {
-  font-size: 80%
-}
-
 .list {
   padding: 1rem;
 }
@@ -114,7 +110,7 @@ input {
   font-family: Candara;
 }
 
-.fancy-username {
+.subtitle {
   font-size: 90%;
 }
 
@@ -126,4 +122,12 @@ input {
 
 .title-wrapper {
   margin: 1rem;
+}
+
+.home-prompt {
+  margin: 2rem 0 0 0;
+}
+
+.view-page {
+  padding: 2rem;
 }
