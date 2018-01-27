@@ -1,6 +1,9 @@
 import React from 'react'
 
 export default ({ element }) => {
+  if (!element) {
+    return null
+  }
   return (
     <div>
       <h2>{element.name}</h2>

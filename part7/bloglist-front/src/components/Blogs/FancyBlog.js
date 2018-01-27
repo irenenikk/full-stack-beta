@@ -17,6 +17,9 @@ class FancyBlog extends React.Component {
     }
 
     render() {
+      if (!this.props.element) {
+        return null
+      }
       return (
         <div>
           <h3 onClick={this.props.toggleShowFullInfo}>

@@ -9,7 +9,10 @@ export default ({ children }) => {
       <div>
         {
           children.map(c => {
-            return <Route key={c.props.path} exact path={c.props.path} render={({ match, history }) => React.cloneElement(c, { element: c.props.findElement(match.params.id), history })}/>
+            return <Route key={c.props.path} exact path={c.props.path} render={({ match, history }) => {
+              const element = c.props.findElement(match.params.id)
+              return React.cloneElement(c, { element, history })
+            }}/>
           })
         }
       </div>

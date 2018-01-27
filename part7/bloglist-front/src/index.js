@@ -10,6 +10,9 @@ import blogsReducer from './state/reducers/blogsReducer'
 import sessionReducer from './state/reducers/sessionReducer'
 import usersReducer from './state/reducers/usersReducer'
 import App from './components/App'
+import { loadSession } from './state/actions/sessionActions'
+import { getAllBlogs } from './state/actions/blogActions'
+import { getAllUsers } from './state/actions/userActions'
 
 const reducer = combineReducers({
   notification: notificationReducer,
@@ -19,8 +22,13 @@ const reducer = combineReducers({
 })
 const store = createStore(
   reducer,
-  applyMiddleware(thunk)
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk),
 )
+
+store.dispatch(loadSession())
+store.dispatch(getAllBlogs())
+store.dispatch(getAllUsers())
 
 ReactDOM.render(
   <Provider store={store}>

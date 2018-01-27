@@ -1,20 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { getAllBlogs } from '../state/actions/blogActions'
-import { getAllUsers } from '../state/actions/userActions'
-import { loadSession } from '../state/actions/sessionActions'
+import { HashRouter as Router } from 'react-router-dom'
 import LoginForm from './Forms/LoginForm'
 import Content from './Content'
 import Notification from './Notification'
 
 class App extends React.Component {
-
-  async componentWillMount() {
-    this.props.getAllBlogs()
-    this.props.getAllUsers()
-    this.props.loadSession()
-  }
 
   render() {
     if (this.props.user.username === undefined) {
@@ -40,11 +31,11 @@ class App extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  getAllBlogs,
-  loadSession,
-  getAllUsers
-}
+// const mapDispatchToProps = {
+//   loadSession,
+//   getAllUsers,
+//   getAllBlogs
+// }
 
 const mapStateToProps = (state) => {
   return {
@@ -53,5 +44,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, null)(App)

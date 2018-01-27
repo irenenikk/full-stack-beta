@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import RouteMenu from './Routes/RouteMenu'
 import ShowRoutes from './Routes/ShowRoutes'
+import { withRouter } from 'react-router-dom'
 
 import Blogs from './Blogs/Blogs'
 import BlogForm from './Forms/BlogForm'
@@ -10,7 +11,6 @@ import Togglable from './Togglable'
 import Users from './Users/Users'
 import FancyUser from './Users/FancyUser'
 import FancyBlog from './Blogs/FancyBlog'
-import { withRouter } from 'react-router-dom'
 
 class Content extends React.Component {
 
@@ -30,8 +30,8 @@ class Content extends React.Component {
           <BlogForm />
         </Togglable>
         <RouteMenu>
-          <Users name='Users' path='/users'/>
-          <Blogs name='Blogs' path='/blogs'/>
+          <Users name='Users' path='/users' users={this.props.users}/>
+          <Blogs name='Blogs' path='/blogs' blogs={this.props.blogs}/>
         </RouteMenu>
         <ShowRoutes>
           <FancyUser path='/users/:id' findElement={(id) => this.userById(id)}/>
